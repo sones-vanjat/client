@@ -7,17 +7,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     roomName: '',
-    player: ''
+    player: '',
+    readyRoom : ''
   },
   mutations: {
-    addPlayerName (state, payload) {
+    ADD_PLAYER (state, payload) {
       state.playerName = payload
+    },
+    CHANGE(state, payload){
+      state.readyRoom = payload
+      console.log('iue state',state.readyRoom);
+      
     }
   },
   actions: {
     createRoom (context, data) {
+
       let player = data.player
         let room = data.room
+        context.commit('CHANGE', room)
+        context.commit('ADD_PALYER',player)
         db.ref('rooms/' + room).once('value').then(function(snapshot){
             // console.log(snapshot.val());
             let cek = snapshot.val()
@@ -25,18 +34,30 @@ export default new Vuex.Store({
                 db.ref('rooms/' + room + '/player1').set({
                     player: player,
                     position: '-190px 0 0 -40px',
+                    token : room
                 })
-                this.$route.push('/room')
+                let token = room
+                localStorage.setItem('room', room)
+                // localStorage.setItem('token1', token)
+                window.location.href = '/room'
             }else if (!cek.player2 && cek.player1 !== '') {
                 db.ref('rooms/' + room + '/player2').set({
                     player: player,
-                    position: '-190px 0 0 -40px'
+                    position: '-190px 0 0 -40px',
+                    token : room
                 })
-                this.$route.push('/room')
+                let token = room
+                localStorage.setItem('room', room)
+                // localStorage.setItem('token2', token)
+                window.location.href = '/room'
             }
         });
     },
     updatePosition () {
+
+    },
+
+    cekWaitingRoom () {
 
     }
   }
