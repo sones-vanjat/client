@@ -26,6 +26,6 @@ export default new Router({
       path: '/gameplay',
       name: 'GamePlay',
       component: GamePlay
-    },
+    }
   ]
 })

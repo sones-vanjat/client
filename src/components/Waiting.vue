@@ -36,7 +36,7 @@ export default {
                 for(let count in result[room]) {
                     countPlayer++
                     if(countPlayer === 2) {
-                        window.location.href = '/gamePlay'
+                        window.location.href = '/gameplay'
                     }
                 }
             })

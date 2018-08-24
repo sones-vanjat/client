@@ -53,12 +53,11 @@ export default new Vuex.Store({
             }
         });
     },
-    updatePosition () {
-
-    },
-
-    cekWaitingRoom () {
-
+    updatePosition (context, dataPlayer) {
+      db.ref(`rooms/${dataPlayer.room}/${dataPlayer.player}`).set({
+        player: dataPlayer.player,
+        position: dataPlayer.position
+      })
     }
   }
 })
